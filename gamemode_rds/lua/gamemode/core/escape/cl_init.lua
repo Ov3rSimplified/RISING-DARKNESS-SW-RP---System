@@ -2,6 +2,29 @@
 
 _RDS.Escape = _RDS.Escape or {}
 
+_RDS.Escape.Buttons = {
+
+    ["Spielen"] = {
+        func = function()
+            _RDS.Escape.Frame:Remove()
+        end,
+        order = 1,
+    },
+
+    ["Forum"] = {
+        func = function()
+        end,
+        order = 2,
+    },
+
+    ["Verlassen"] = {
+        func = function()
+           LocalPlayer():ConCommand("disconnect")
+        end,
+        order = 100,
+    },
+}
+
 
 local Gtbl = _RDS.Escape
 
@@ -32,8 +55,13 @@ function Gtbl.Init()
         Gtbl.Frame:Center()
         Gtbl.Frame:MakePopup()
 
+        local mattt = Material("materials/rdsrp/mat/bg.png")
+
             Gtbl.Frame.Paint = function(self,w,h)
-                _RDS:DrawBlurRect(0, 0, w, h, 3, 6)
+                --_RDS:DrawBlurRect(0, 0, w, h, 3, 6)
+                surface.SetDrawColor(_RDS:Color("WHITE", 255))
+                surface.SetMaterial(mattt)
+                surface.DrawTexturedRect(0,0,w,h)
             end
         isOpen = true 
     end

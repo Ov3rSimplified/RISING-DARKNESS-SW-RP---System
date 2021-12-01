@@ -6,4 +6,7 @@ _RDS.Admin.IConfig = {
         Questmodule = {},
         Core = {},
     }, 
+    ["AdvTrain"] = {
+        
+    }
 }  

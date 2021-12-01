@@ -2,13 +2,6 @@ _RDS = _RDS or {}
 _RDS.QuestSystem = _RDS.QuestSystem or {}
 _RDS.Admin = _RDS.Admin or {}
 
-
-Comlink = {}
-
-Comlink.Version = 1.0
-
-Comlink.Channels = {}
-
 local rdsrp = "Test RDS:RP"
 MsgC(Color(250,0,0), "["..rdsrp.."] ", Color(255,255,255), "WAS INITIALIZED....\n")
   
@@ -45,9 +38,13 @@ local core = "gamemode/core/"
 local init = "gamemode/init/"
 local config = "gamemode/config/"
 
+
 if GAMEMODE then 
     LoadFiles(init)
     LoadFiles(core)
+	LoadFiles(core.."bindsys")
+	LoadFiles(core.."advtraining")
+	LoadFiles(core.."advtraining/weaponchest")
     LoadFiles(core.."comlink")
 	LoadFiles(core.."scoreboard")
 	LoadFiles(core.."escape")
@@ -60,6 +57,10 @@ end
 hook.Add("InitPostEntity", "_RDS.Gamemode.File", function()
 	LoadFiles(init)
     LoadFiles(core)
+	LoadFiles(core.."bindsys")
+	LoadFiles(core.."advtraining")
+	LoadFiles(core.."advtraining/weaponchest")
+	LoadFiles(core.."advtraining/factionmenu")
     LoadFiles(core.."comlink")
 	LoadFiles(core.."scoreboard")
 	LoadFiles(core.."escape")

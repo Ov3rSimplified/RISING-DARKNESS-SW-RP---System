@@ -25,6 +25,7 @@ end
 
     
     // Admin
+	_RDS:CreateFont("RDS.UI.Closebutton","Arial",ScrH()*0.035)
     _RDS:CreateFont("RDS.Admin.Title","Arial",ScrH()*0.090)
     _RDS:CreateFont("RDS.Admin.btn","Arial",ScrH()*0.060)
     _RDS:CreateFont("RDS.Admin.btnply","Arial",ScrH()*0.040)
@@ -35,9 +36,25 @@ end
     _RDS:CreateFont("RDSRP.QeSt.Quest","Arial",ScrH()*0.035)
     _RDS:CreateFont("RDSRP.QeSt.Ent","Arial",ScrH()*0.5)
 
-	//
+	// ADVTrain
+	_RDS:CreateFont("RDS.AdvTrain.Title","Arial",ScrH()*0.035)
+	_RDS:CreateFont("RDS.AdvTrain.informations","Arial",ScrH()*0.035)
+	_RDS:CreateFont("RDS.AdvTrain.Weapontitle","Arial",ScrH()*0.065)
 
-    _RDS:CreateFont("RDSRP.Com.MainTitle","Arial",ScrH()*0.070)
-	_RDS:CreateFont("RDSRP.Com.ComTitle","Arial",ScrH()*0.040)
+	// Escape
+	_RDS:CreateFont("RDS.ESCmenu.Title","SF Theramin Gothic",ScrH()*0.055)
+	--_RDS:CreateFont("RDS.ESCmenu.graytitle","Aurebesh",ScrH()*0.025)
+
+	// bindsys
+	_RDS:CreateFont("RDSRP.bsys.bindtitle","Arial",ScrH()*0.070)
+	_RDS:CreateFont("RDSRP.bsys.bindertitle","Arial",ScrH()*0.030)
 
 
+	surface.CreateFont( "RDS.ESCmenu.graytitle", { 
+		font = "Aurebesh", 
+		size = ScrH() * 0.025, 
+		weight = 100, 
+		antialias = true, 
+		bold = true 
+	 } )
+	

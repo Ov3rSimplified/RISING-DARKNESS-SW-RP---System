@@ -113,3 +113,26 @@ function _RDS:StringRequest( strTitle, strDefaultText, strDefaultText2, fnEnter,
 	return Window
 
 end
+
+
+file.CreateDir("rdsrp")
+file.CreateDir("rdsrp/imgur")
+ 
+_RDS.CachedImages = _RDS.CachedImages or {}
+
+function _RDS:GetImgurImage(ImgurID)
+    if _RDS.CachedImages[ImgurID] then
+        return _RDS.CachedImages[ImgurID]
+    elseif file.Exists("rdsrp/imgur/"..ImgurID..".png", "DATA") then
+        _RDS.CachedImages[ImgurID] = Material("data/rdsrp/imgur/"..ImgurID..".png", "noclamp smooth")
+    else
+        http.Fetch("https://i.imgur.com/"..ImgurID..".png",function(Body, Len, Headers)
+            file.Write("rdsrp/imgur/"..ImgurID..".png", Body)
+            _RDS.CachedImages[ImgurID] = Material("data/rdsrp/imgur/"..ImgurID..".png", "noclamp smooth")
+        end)
+    end
+
+    return _RDS.CachedImages[ImgurID]
+end
+ 
+PrintTable(_RDS.CachedImages)
