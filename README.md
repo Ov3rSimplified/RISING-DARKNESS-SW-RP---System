@@ -8,3 +8,14 @@ RDS:RP Gamemode
 ```
 _RDS:Color("COLORNAME", 255)
 ```
+
+## Notify
+
+### Clientside
+```
+_RDS:Notify(mode, title, body, duration)
+```
+### Serverside
+```
+_RDS:Notify(mode, ply, title, body, duration)
+```
