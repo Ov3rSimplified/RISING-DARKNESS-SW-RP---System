@@ -11,6 +11,9 @@ _RDS:Color("COLORNAME", 255)
 
 ## Notify
 
+#### Modes
+
+
 ### Clientside
 ```
 _RDS:Notify(mode, title, body, duration)
