@@ -12,7 +12,10 @@ _RDS:Color("COLORNAME", 255)
 ## Notify
 
 #### Modes
-
+- "success"
+- "error"
+- "warning"
+- info"
 
 ### Clientside
 ```
