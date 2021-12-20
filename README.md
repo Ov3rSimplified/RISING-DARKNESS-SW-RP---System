@@ -15,7 +15,7 @@ _RDS:Color("COLORNAME", 255)
 - "success"
 - "error"
 - "warning"
-- info"
+- "info"
 
 ### Clientside
 ```
