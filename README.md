@@ -29,8 +29,8 @@ _RDS:Notify(mode, ply, title, body, duration)
 ## File Structure
 
 ### Simple Module
-Addon
 ```
+[YOURMODULENAME]
   --> sh_index.lua -- Globals var or Tbls
    --> cl_init.lua -- to init a menu or something... Dont Write your Complete code!!!
    --> cl_YOURCLNAME.lua
