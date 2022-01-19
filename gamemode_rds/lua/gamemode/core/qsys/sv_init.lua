@@ -14,8 +14,6 @@ net.Receive("RDS.Questsystem.Readall", function(len,ply)
     net.WriteType(read)
     --net.Send(ply)
     net.Broadcast() 
-
- 
 end)
 
 
