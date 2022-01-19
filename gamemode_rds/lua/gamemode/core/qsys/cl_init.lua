@@ -1,6 +1,4 @@
 --
-_RDS.QuestSystem.Readall = _RDS.QuestSystem.Readall or {}
-
 local Gtbl = _RDS.QuestSystem  
    
 local points = 0
@@ -200,6 +198,7 @@ local function Endscreen()
             net.Start("RDS.Questsystem.system")
             net.WriteTable(stbl)
             net.SendToServer() 
+            _RDS:Notify("success", "Bestanden!", "Du hast erfolgreich den OOC-Test bestanden!", 4)
         end
     if points == half then 
         txt = "Versuche es Erneut"

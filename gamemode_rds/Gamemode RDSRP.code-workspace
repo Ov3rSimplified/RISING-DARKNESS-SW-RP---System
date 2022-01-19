@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "..\\mvp_perfecthands"
 		}
 	],
 	"settings": {}
