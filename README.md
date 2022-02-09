@@ -31,7 +31,7 @@ _RDS:Notify(mode, ply, title, body, duration)
 ### Simple Module
 ```
 [YOURMODULENAME]
-  --> sh_index.lua -- Globals var or Tbls
+  --> sh_index.lua -- Important for Init and Load the Module
    --> cl_init.lua -- to init a menu or something... Dont Write your Complete code!!!
    --> cl_YOURCLNAME.lua
    
