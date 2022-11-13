@@ -1,6 +1,9 @@
 THIS IS NOT A GAMEMODE, ITS ONLY A ADDON! 
 THATS WAS MY OLD SERVER SCRIPT FOR DARKRP!! SW:RP
 
+
+https://steamcommunity.com/sharedfiles/filedetails/?id=2698620730
+
 ## Colors
 ```
 _RDS:Color("COLORNAME", 255)
