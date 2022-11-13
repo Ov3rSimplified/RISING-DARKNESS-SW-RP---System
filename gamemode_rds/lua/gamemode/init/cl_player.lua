@@ -1,4 +1,5 @@
 --
+
 concommand.Add("_RDS.Reload", function()
     if _RDS.Config.AdminValue[ LocalPlayer():GetUserGroup() ] then 
         print("MoinMoin") 
@@ -15,30 +16,20 @@ concommand.Add("LoadImgur", function(cmd)
     _RDS:GetImgurImage(cmd)
 end)
 
-
-hook.Add("ContextMenuOpen", "RDSRP.9883824", function()
-	if _RDS.Config.AdminValue[ LocalPlayer():GetUserGroup() ] then
-        return true
-    else
-        return false
-	end
-end)
-
-hook.Add("SpawnMenuOpen", "RDSRP.234982811", function()
-	if _RDS.Config.AdminValue[ LocalPlayer():GetUserGroup() ] then
-        return true
-    else
-        return false
-	end
-end)
-
-if CLIENT then 
-    RunConsoleCommand('hud_deathnotice_time', '0')
-end
-
 net.Receive("RDSRP.IPlayer.GetCharacterID", function(len)
     local get = net.ReadType()
     cCharacterID = 0
     cCharacterID = get
     print(cCharacterID)
 end) 
+
+
+concommand.Add("test234", function(cmd) 
+    local m = MVPPerfectHands.Menu()
+
+    m:AddOption("Heil", nil)
+    m:AddOption("Hitler", nil)
+
+    m:Open()
+end)
+

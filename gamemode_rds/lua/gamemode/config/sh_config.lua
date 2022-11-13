@@ -5,11 +5,9 @@ _RDS.Config = _RDS.Config or {}
 
 // ONLY RANKS WITH FULL ACCES!!
 _RDS.Config.AdminValue = {
-    ["superadmin"] = true,
-    ["admin"] = true, 
-    ["user"] = false     
-} 
 
+} 
+--_RDS.Config.AdminValue["user"].QMenu
 _RDS.Config.ExtraUserOptions = {
     ["superadmin"] = true,
     ["user"] = true
@@ -53,11 +51,6 @@ timer.Simple(0.1,function()
             func = function()
             end,
             order = 2,
-        },
-
-        ["Einstellungen"] = {
-            func = function() _RDS.PlayerSettings:Init() end,
-            order = 3,
         },
 
         ["Gmod Optionen"] = {

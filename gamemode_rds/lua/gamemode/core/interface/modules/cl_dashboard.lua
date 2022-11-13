@@ -27,19 +27,53 @@ function RDSUI:OpenInventory()
           surface.DrawOutlinedRect(0,0,w,h,2)
         end 
     
-    _RDS.Interface.UI.SelectBar:AddSheet( "Inventar", RDSUI.Panel )
+    _RDS.Interface.UI.SelectBar:AddSheet( "Dashboard", RDSUI.Panel )
     RDSUI:GetItems()
 end
 
 
 function RDSUI:GetItems()
     self:PlayerPanel()
-    self:SpecialisationPanel()
+ --   self:SpecialisationPanel()
 end
 
 function RDSUI:PlayerPanel()
     local scrw, scrh = ScrW(),ScrH()
     local localplayer = LocalPlayer()
+
+    local Panel = RDSUI.Panel:Add("DPanel")
+    Panel:SetPos(scrw*0.01,scrh*0.02)
+    Panel:SetSize(scrw*0.29, scrh*0.2)
+    Panel.Paint = nil
+
+    /*
+    local PlayerModelPanel = vgui.Create( "DModelPanel",Panel )
+    PlayerModelPanel:SetPos(scrw*0.014,scrh*0.02)
+    PlayerModelPanel:SetSize(scrw*0.07, scrh*0.09)
+    PlayerModelPanel:SetModel( LocalPlayer():GetModel() )      
+    PlayerModelPanel.Entity:SetSkin( LocalPlayer():GetSkin() )
+    PlayerModelPanel:SetAmbientLight(Color(217, 115, 52, 200))
+    PlayerModelPanel:SetDirectionalLight(BOX_BOTTOM, Color(255,255,255))
+    function PlayerModelPanel:LayoutEntity( Entity ) return end 
+    local headpos = PlayerModelPanel.Entity:GetBonePosition(PlayerModelPanel.Entity:LookupBone("ValveBiped.Bip01_Head1"))
+    PlayerModelPanel:SetLookAt(headpos)
+    PlayerModelPanel:SetCamPos(headpos-Vector(-15, 0, 0))
+
+*/
+    local PanelPaint = vgui.Create("DPanel", Panel)
+    PanelPaint:Dock(FILL)
+    PanelPaint.Paint = function( self, w, h ) 
+    --   draw.RoundedBox( 0, 0, 0, w, h, _RDS:Color("BLACK",130) )
+        -- surface.SetDrawColor(_RDS:Color("WHITE",255))
+        -- surface.DrawOutlinedRect(0,0,w,h,2)
+        surface.SetDrawColor(_RDS:Color("WHITE",255))
+        surface.SetMaterial(Material("materials/rdsrp/pictures/hexagon.png"))
+        surface.DrawTexturedRect(5,0,w-scrw*0.2,h-scrh*0.07)
+        draw.SimpleText(LocalPlayer():GetName(), "RDSRP.PDC.30", w-scrw*0.19, h-scrh*0.155, _RDS:Color("WHITE",255), TEXT_ALIGN_LEFT,TEXT_ALIGN_CENTER)
+        draw.SimpleText(LocalPlayer():getJobTable().rankprefix or "N/A", "RDSRP.PDC.25", w-scrw*0.19, h-scrh*0.131, Color(98,98,98,130), TEXT_ALIGN_LEFT,TEXT_ALIGN_CENTER)
+        end 
+
+/*
 
     local Panel = RDSUI.Panel:Add("DPanel")
     Panel:Dock( LEFT )
@@ -129,130 +163,14 @@ function RDSUI:PlayerPanel()
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
     end
+    */
 end
-/*
- local PlayerModelPanel = vgui.Create( "DModelPanel",ScrollPanel )
-    PlayerModelPanel:Dock(TOP)
-    PlayerModelPanel:SetTall( scrh * 0.59 )
-    PlayerModelPanel:SetFOV(20)
-    PlayerModelPanel:SetModel( localplayer:GetModel() )      
-    PlayerModelPanel.Entity:SetSkin( localplayer:GetSkin() )
-    
-    local curgroups = localplayer:GetBodyGroups() 
-
-    PlayerModelPanel:SetAmbientLight(Color(217, 115, 52, 200))
-    PlayerModelPanel:SetDirectionalLight(BOX_BOTTOM, Color(255,255,255))
-
-    PlayerModelPanel.rot = 110
-	PlayerModelPanel.fov = 20
-    PlayerModelPanel.dragging = false -- left click
-	PlayerModelPanel.dragging2 = false -- right click
-	PlayerModelPanel.ux = 0
-	PlayerModelPanel.uy = 0
-	PlayerModelPanel.spinmul = 0.4
-	PlayerModelPanel.zoommul = 0.09
-
-	PlayerModelPanel.xmod = 0
-	PlayerModelPanel.ymod = 0
-
-    for k,v in pairs( curgroups ) do
-        local ent = PlayerModelPanel.Entity
-        local cur_bgid = localplayer:GetBodygroup( v.id )
-            ent:SetBodygroup( v.id, cur_bgid )
-    end
-
-    self.selectedSequence = nil
-    local sequence = "pose_standing_02"
-
-    function PlayerModelPanel:LayoutEntity( Entity )
-        if ( self.bAnimated ) then self:RunAnimation() end
-
-        if sequence == false then
-            Entity:SetAngles(Angle(0, 45, 0))
-        else
-            Entity:SetAngles(Angle(0, 45, 0))
-            if !self.selectedSequence then
-            self.selectedSequence = sequence
-        end
-            Entity:SetSequence(Entity:LookupSequence(self.selectedSequence))
-        end
-
-        local newrot = self.rot
-		local newfov = self:GetFOV()
-
-		if self.dragging == true then
-			newrot = self.rot + (gui.MouseX() - self.ux)*self.spinmul
-			newfov = self.fov + (self.uy - gui.MouseY()) * self.zoommul
-			if newfov < 20 then newfov = 20 end
-			if newfov > 75 then newfov = 75 end
-		end
-
-		local newxmod, newymod = self.xmod, self.ymod
-
-		if self.dragging2 == true then
-			newxmod = self.xmod + (self.ux - gui.MouseX())*0.02
-			newymod = self.ymod + (self.uy - gui.MouseY())*0.02
-		end
-
-		newxmod = math.Clamp( newxmod, -16, 16 )
-		newymod = math.Clamp( newymod, -16, 16 )
-
-		Entity:SetAngles( Angle(0,0,0) )
-		self:SetFOV( newfov )
-
-		-- calculate if we should look at the face
-		local height = 72/2
-		-- fov between 20 and 75,
-		-- height between 72/2 and 72
-		local frac = InverseLerp( newfov, 75, 20 )
-		height = Lerp( frac, 72/2, 64 )
-
-		-- calculate look ang
-		local norm = (self:GetCamPos() - Vector(0,0,64))
-		norm:Normalize()
-		local lookAng = norm:Angle()
-
-		self:SetLookAt( Vector(0,0,height-(2*frac) ) - Vector( 0, 0, newymod*2*(1-frac) ) - lookAng:Right()*newxmod*2*(1-frac) )
-		self:SetCamPos( Vector( 64*math.sin( newrot * (math.pi/180)), 64*math.cos( newrot * (math.pi/180)), height + 4*(1-frac)) - Vector( 0, 0, newymod*2*(1-frac) ) - lookAng:Right()*newxmod*2*(1-frac) )
-    end
-
-	function PlayerModelPanel:OnMousePressed( k )
-		self.ux = gui.MouseX()
-		self.uy = gui.MouseY()
-		self.dragging = (k == MOUSE_LEFT) or false 
-		self.dragging2 = (k == MOUSE_RIGHT) or false 
-	end
-
-	function PlayerModelPanel:OnMouseReleased( k )
-		if self.dragging == true then
-			self.rot = self.rot + (gui.MouseX() - self.ux)*self.spinmul
-			self.fov = self.fov + (self.uy - gui.MouseY()) * self.zoommul
-			self.fov = math.Clamp( self.fov, 20, 75 )
-		end
-
-		if self.dragging2 == true then
-			self.xmod = self.xmod + (self.ux - gui.MouseX())*0.02
-			self.ymod = self.ymod + (self.uy - gui.MouseY())*0.02
-
-			self.xmod = math.Clamp( self.xmod, -16, 16 )
-			self.ymod = math.Clamp( self.ymod, -16, 16 )
-		end
-
-		self.dragging = false 
-		self.dragging2 = false
-	end
-
-	function PlayerModelPanel:OnCursorExited()
-		if self.dragging == true or self.dragging2 == true then
-			self:OnMouseReleased()
-		end
-	end
-*/
 
 function RDSUI:SpecialisationPanel()
     local scrw, scrh = ScrW(),ScrH()
 
     local localplayer = LocalPlayer()
+    local ID = tonumber(_RDS.Interface.UI.CID)
 
     local Panel = RDSUI.Panel:Add("DPanel")
     Panel:Dock( LEFT )
@@ -273,17 +191,15 @@ function RDSUI:SpecialisationPanel()
     local ScrollPanel = Panel:Add("DScrollPanel")
     ScrollPanel:Dock(FILL)
     local sbar = ScrollPanel:GetVBar()
-    sbar:SetSize(2,0)
+   sbar:SetSize(2,0)
     sbar:SetHideButtons( true )
     function sbar.btnGrip:Paint(w, h) draw.RoundedBoxEx(14,0,0,w,h,Color(255,255,255),false,false,false,true) end
     function sbar:Paint(w, h) draw.RoundedBoxEx(14,0,0,w,h,Color(46,46,46),false,false,false,true) end
     function sbar.btnUp:Paint(w, h) return end
     function sbar.btnDown:Paint(w, h) return end
 
-    for k,v in pairs(_RDS.Advtraining.Trainings) do
-        if not _RDS.Advtraining.Whitelist[k][cCharacterID] then  
-            continue
-        end
+    local function Specis()
+    for k,v in pairs(_RDS.Specialisation.Equipment.PlyHave) do 
         local item = ScrollPanel:Add("DButton")
         item:Dock(TOP)
         item:DockMargin(10,6,10,0)
@@ -295,9 +211,134 @@ function RDSUI:SpecialisationPanel()
                 draw.RoundedBox(5,2,2,w-4,h-4,_RDS:Color("BLACK",130))
                 surface.SetDrawColor( clr )
                 surface.DrawOutlinedRect(0,0,w,h,2)
-                draw.SimpleText(v.categorys.weaponname, "RDS.Admin.btn", self:GetWide()/2, self:GetTall()/2, clr, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                draw.SimpleText(_RDS.Admin.IConfig["Specialisation"].Core.Equipmentpakets[k].categorys.weaponname, "RDS.Admin.btn", self:GetWide()/2, self:GetTall()/2, clr, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
             end
+        end
     end
-
-
+    Specis()
+    timer.Simple(0.2, function( )
+        ScrollPanel:Clear()
+        Specis()
+    end)
 end
+
+
+
+    /*
+        local PlayerModelPanel = vgui.Create( "DModelPanel",ScrollPanel )
+        PlayerModelPanel:Dock(TOP)
+        PlayerModelPanel:SetTall( scrh * 0.59 )
+        PlayerModelPanel:SetFOV(20)
+        PlayerModelPanel:SetModel( localplayer:GetModel() )      
+        PlayerModelPanel.Entity:SetSkin( localplayer:GetSkin() )
+        
+        local curgroups = localplayer:GetBodyGroups() 
+
+        PlayerModelPanel:SetAmbientLight(Color(217, 115, 52, 200))
+        PlayerModelPanel:SetDirectionalLight(BOX_BOTTOM, Color(255,255,255))
+
+        PlayerModelPanel.rot = 110
+        PlayerModelPanel.fov = 20
+        PlayerModelPanel.dragging = false -- left click
+        PlayerModelPanel.dragging2 = false -- right click
+        PlayerModelPanel.ux = 0
+        PlayerModelPanel.uy = 0
+        PlayerModelPanel.spinmul = 0.4
+        PlayerModelPanel.zoommul = 0.09
+
+        PlayerModelPanel.xmod = 0
+        PlayerModelPanel.ymod = 0
+
+        for k,v in pairs( curgroups ) do
+            local ent = PlayerModelPanel.Entity
+            local cur_bgid = localplayer:GetBodygroup( v.id )
+                ent:SetBodygroup( v.id, cur_bgid )
+        end
+
+        self.selectedSequence = nil
+        local sequence = "pose_standing_02"
+
+        function PlayerModelPanel:LayoutEntity( Entity )
+            if ( self.bAnimated ) then self:RunAnimation() end
+
+            if sequence == false then
+                Entity:SetAngles(Angle(0, 45, 0))
+            else
+                Entity:SetAngles(Angle(0, 45, 0))
+                if !self.selectedSequence then
+                self.selectedSequence = sequence
+            end
+                Entity:SetSequence(Entity:LookupSequence(self.selectedSequence))
+            end
+
+            local newrot = self.rot
+            local newfov = self:GetFOV()
+
+            if self.dragging == true then
+                newrot = self.rot + (gui.MouseX() - self.ux)*self.spinmul
+                newfov = self.fov + (self.uy - gui.MouseY()) * self.zoommul
+                if newfov < 20 then newfov = 20 end
+                if newfov > 75 then newfov = 75 end
+            end
+
+            local newxmod, newymod = self.xmod, self.ymod
+
+            if self.dragging2 == true then
+                newxmod = self.xmod + (self.ux - gui.MouseX())*0.02
+                newymod = self.ymod + (self.uy - gui.MouseY())*0.02
+            end
+
+            newxmod = math.Clamp( newxmod, -16, 16 )
+            newymod = math.Clamp( newymod, -16, 16 )
+
+            Entity:SetAngles( Angle(0,0,0) )
+            self:SetFOV( newfov )
+
+            -- calculate if we should look at the face
+            local height = 72/2
+            -- fov between 20 and 75,
+            -- height between 72/2 and 72
+            local frac = InverseLerp( newfov, 75, 20 )
+            height = Lerp( frac, 72/2, 64 )
+
+            -- calculate look ang
+            local norm = (self:GetCamPos() - Vector(0,0,64))
+            norm:Normalize()
+            local lookAng = norm:Angle()
+
+            self:SetLookAt( Vector(0,0,height-(2*frac) ) - Vector( 0, 0, newymod*2*(1-frac) ) - lookAng:Right()*newxmod*2*(1-frac) )
+            self:SetCamPos( Vector( 64*math.sin( newrot * (math.pi/180)), 64*math.cos( newrot * (math.pi/180)), height + 4*(1-frac)) - Vector( 0, 0, newymod*2*(1-frac) ) - lookAng:Right()*newxmod*2*(1-frac) )
+        end
+
+        function PlayerModelPanel:OnMousePressed( k )
+            self.ux = gui.MouseX()
+            self.uy = gui.MouseY()
+            self.dragging = (k == MOUSE_LEFT) or false 
+            self.dragging2 = (k == MOUSE_RIGHT) or false 
+        end
+
+        function PlayerModelPanel:OnMouseReleased( k )
+            if self.dragging == true then
+                self.rot = self.rot + (gui.MouseX() - self.ux)*self.spinmul
+                self.fov = self.fov + (self.uy - gui.MouseY()) * self.zoommul
+                self.fov = math.Clamp( self.fov, 20, 75 )
+            end
+
+            if self.dragging2 == true then
+                self.xmod = self.xmod + (self.ux - gui.MouseX())*0.02
+                self.ymod = self.ymod + (self.uy - gui.MouseY())*0.02
+
+                self.xmod = math.Clamp( self.xmod, -16, 16 )
+                self.ymod = math.Clamp( self.ymod, -16, 16 )
+            end
+
+            self.dragging = false 
+            self.dragging2 = false
+        end
+
+        function PlayerModelPanel:OnCursorExited()
+            if self.dragging == true or self.dragging2 == true then
+                self:OnMouseReleased()
+            end
+        end
+    */

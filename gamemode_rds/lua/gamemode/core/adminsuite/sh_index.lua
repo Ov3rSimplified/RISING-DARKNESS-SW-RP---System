@@ -15,25 +15,11 @@
 _RDS.Adminsuite = _RDS.Adminsuite or {}
 _RDS.Adminsuite.UI = _RDS.Adminsuite.UI or {}
 _RDS.Adminsuite.UI.AdminSettings = _RDS.Adminsuite.UI.AdminSettings or {}
+_RDS.Adminsuite.UI.HardSettings = _RDS.Adminsuite.UI.HardSettings or {}
 _RDS.Adminsuite.UI.ServerConfigModules = {}
 _RDS.Adminsuite.UI.Config = _RDS.Adminsuite.UI.Config or {}
  
-
-/* Loader */
-local Load = {
-    "gamemode/core/adminsuite/cl_menu.lua",
-    "gamemode/core/adminsuite/cl_init.lua",
-    "gamemode/core/adminsuite/sv_net.lua",
-    "gamemode/core/adminsuite/cl_net.lua",
-    "gamemode/core/adminsuite/module/cl_questsys.lua",
-    "gamemode/core/adminsuite/module/cl_specsys.lua",
-    "gamemode/core/adminsuite/module/staminasystem.lua",
-}
-for k,v in ipairs(Load) do   
-    _RDS:LoadFile(v) 
-end
-
-
+  
 /*
 _RDS.Adminsuite.UI:ServerModuleAdd({
     id = 1 // Sort order

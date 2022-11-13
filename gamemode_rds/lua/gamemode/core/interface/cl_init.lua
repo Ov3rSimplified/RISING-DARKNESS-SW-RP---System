@@ -15,7 +15,8 @@
 
 local RDSUI = _RDS.Interface.UI
 
-function RDSUI:Main()
+function RDSUI:Main(tablee)
+    _RDS.Interface.UI.CID = tablee.ID
     local scrw, scrh = ScrW(), ScrH()
     RDSUI.MPanel = vgui.Create("RDSRP.BPanel")
     RDSUI.MPanel:SetSize(ScrW(),ScrH())
@@ -63,31 +64,21 @@ function RDSUI:Main()
     SelectBar:TargetColor(_RDS:Color("BELIZE HOLE",255))
     RDSUI.SelectBar = SelectBar
 
-     /*
-    local panel1 = vgui.Create( "DPanel", panel )
-    panel1:Dock( FILL )
-    panel1.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, 130 ) ) end 
-    panel:AddSheet( "Inventar", panel1, Color(0,255,157), "materials/rdsrp/icon/admin_setting.png")
-
-    local panel2 = vgui.Create( "DPanel", panel )
-    panel2:Dock( FILL )
-    panel2.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, 130 ) ) end 
-    panel:AddSheet( "Binds", panel2, Color(255,0,0), "")
-
-    local panel3 = vgui.Create( "DPanel", panel )
-    panel3:Dock( FILL )
-    panel3.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, 130 ) ) end 
-    panel:AddSheet( "Perks", panel3, Color(255,0,0), "")
-
-    local panel4 = vgui.Create( "DPanel", panel )
-    panel4:Dock( FILL )
-    panel4.Paint = function( self, w, h ) draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 128, 255, 130 ) ) end 
-    panel:AddSheet( "Settings", panel4, Color(255,0,0), "")
-*/
-    RDSUI:GetMenus()    
+    RDSUI:GetMenus()   
 end
+
 
 function RDSUI:GetMenus()
     _RDS.Interface.UI.Inventory:OpenInventory()
     _RDS.Interface.UI.Binds:OpenBinds()
+    _RDS.Interface.UI.Userconfig:OpenUserconfig()
+    _RDS.Interface.UI.Faction:OpenFactions()
 end
+
+
+
+
+net.Receive("RDSRP.InterFace.Menu", function()
+    local read = _RDS.ReadCTable()
+    RDSUI:Main(read)
+end)

@@ -1,6 +1,8 @@
 --
+_RDS.PlayerInitSpawn = false
 util.AddNetworkString("RDSRP.SendCLientData")
 util.AddNetworkString("RDSRP.IPlayer.GetCharacterID")
+util.AddNetworkString("RDSRP.CheckInitialSpawn")
 
 /*
 net.Receive("RDSRP.SendCLientData", function(len,ply)
@@ -60,9 +62,15 @@ hook.Add("CanPlayerSuicide", "tampis", NokillCanPlayerSuicide)
 
 
 
+net.Receive("RDSRP.CheckInitialSpawn", function(_,ply)
+    net.Start("RDSRP.CheckInitialSpawn")
+    net.Send(ply)
+end)
+
 hook.Add("VoidChar.CharacterSelected", "RDSRP.UpdateCharacterID", function(ply)
     net.Start("RDSRP.IPlayer.GetCharacterID")
     net.WriteType(ply:GetCharacterID())
     net.Send(ply)
-    print("Oxenschwanz")
 end)
+
+

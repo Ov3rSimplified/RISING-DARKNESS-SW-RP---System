@@ -17,8 +17,8 @@ SWEP.AdminSpawnable		        = true
 SWEP.DefaultHoldType                    = "normal"
 SWEP.ViewModelFOV = 55
 SWEP.ViewModelFlip = false
-SWEP.ViewModel = "models/infopad.mdl"
-SWEP.WorldModel = "models/infopad.mdl"
+SWEP.ViewModel = "models/hosti/sw_datapad_v.mdl"
+SWEP.WorldModel = "models/hosti/sw_datapad.mdl"
 
 SWEP.Primary.ClipSize		        = -1
 SWEP.Primary.DefaultClip	        = -1

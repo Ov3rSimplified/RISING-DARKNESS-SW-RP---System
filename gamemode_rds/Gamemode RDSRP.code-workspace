@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "..\\mvp_perfecthands"
+		},
+		{
+			"path": "..\\voidchar"
 		}
 	],
 	"settings": {}

@@ -16,18 +16,16 @@ _RDS.Interface = _RDS.Interface or {}
 _RDS.Interface.UI = _RDS.Interface.UI or {}
 _RDS.Interface.Shared = _RDS.Interface.Shared or {}
 
-local Load = {
-    "gamemode/core/interface/cl_init.lua",
-    "gamemode/core/interface/cl_menu.lua",
-}
-for k,v in ipairs(Load) do   
-    _RDS:LoadFile(v) 
+if SERVER then 
+
+    util.AddNetworkString("RDSRP.InterFace.Menu")
+
+    net.Receive("RDSRP.InterFace.Menu", function(len,ply)
+        tbl = {
+            ID = ply:GetCharacterID()
+        }
+        net.Start("RDSRP.InterFace.Menu")
+        _RDS.WriteCTable(tbl)
+        net.Broadcast()
+    end)
 end
-
-
-AddCSLuaFile("gamemode/core/interface/cl_init.lua")
-include("gamemode/core/interface/cl_init.lua")
-
-AddCSLuaFile("gamemode/core/interface/cl_menu.lua")
-include("gamemode/core/interface/cl_menu.lua")
-

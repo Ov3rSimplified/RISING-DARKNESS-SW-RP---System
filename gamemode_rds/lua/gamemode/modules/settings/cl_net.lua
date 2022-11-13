@@ -1,0 +1,3 @@
+--
+cCharacterID = cCharacterID or {}
+--
