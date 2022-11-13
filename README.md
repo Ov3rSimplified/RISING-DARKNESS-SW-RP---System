@@ -1,8 +1,5 @@
-# RDS-RP-Gameode
-RDS:RP Gamemode
-
-## Links
-# generally Document: https://docs.google.com/document/d/1UYwQt2UaraNVx4hD9L-EfOIHxFxWYMxjpR4xZuEMeyY/edit?usp=sharing
+THIS IS NOT A GAMEMODE, ITS ONLY A ADDON! 
+THATS WAS MY OLD SERVER SCRIPT FOR DARKRP!! SW:RP
 
 ## Colors
 ```
